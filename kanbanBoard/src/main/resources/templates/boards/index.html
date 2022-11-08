@@ -1,0 +1,32 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments :: head('Home')}"></head>
+<body>
+
+	<div th:replace="~{fragments :: navbar}"></div>
+	
+	<div class="container mt-3">
+		<div>
+			<h1>Your Kanban Boards</h1>
+		</div>
+		<table class="table table-striped table-hover">
+			<thead class="table-hover">
+				<tr>
+					<th scope="col">Title</th>
+					<th scope="col">Description</th>
+					<th scope="col">Creation day</th>
+					<th scope="col">Owner</th>
+				</tr>
+			</thead>
+			<tbody class="table-group-divider">
+				<tr th:each="board : ${boards}">
+					<td scope="row" th:text="${board.title}"></td>
+					<td scope="row" th:text="${board.description}"></td>
+					<td scope="row" th:text="${board.creationDate}"></td>
+					<td scope="row" th:text="${board.owner.person.name}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
