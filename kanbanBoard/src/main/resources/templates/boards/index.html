@@ -12,7 +12,7 @@
 		<table class="table table-striped table-hover">
 			<thead class="table-hover">
 				<tr>
-					<th scope="col">Title</th>
+					<th scope="col">Name</th>
 					<th scope="col">Description</th>
 					<th scope="col">Creation day</th>
 					<th scope="col">Owner</th>
@@ -20,13 +20,13 @@
 			</thead>
 			<tbody class="table-group-divider">
 				<tr th:each="board : ${boards}">
-					<td scope="row" th:text="${board.title}"></td>
+					<td scope="row" th:text="${board.name}"></td>
 					<td scope="row" th:text="${board.description}"></td>
 					<td scope="row" th:text="${board.creationDate}"></td>
-					<td scope="row" th:text="${board.owner.person.name}"></td>
 				</tr>
 			</tbody>
 		</table>
+		<input class="btn btn-primary" type="button" onclick="location.href='/boards/new';" value="New Board" />
 	</div>
 </body>
 </html>

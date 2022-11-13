@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.springframework.lang.NonNull;
-
 @Entity
 @Table(name="users") 
 public class User {
@@ -23,14 +21,11 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NonNull
 	@OneToOne
 	private Person person;
 	
-	@NonNull
 	private String login;
 	
-	@NonNull
 	private String password;
 	
     @ElementCollection(targetClass = Role.class)

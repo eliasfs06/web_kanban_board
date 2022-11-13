@@ -1,0 +1,38 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments :: head('Home')}"></head>
+<body>
+	<div th:replace="~{fragments :: navbar}"></div>
+	<div class="container mt-3">
+		<h1>New Board</h1>
+		<form th:object="${board}" action="/boards" method="POST">
+			<div class="mb-3">
+				<label for="name" class="form-label">Board Name: </label> 
+				<input type="text" th:class="${#fields.hasErrors('name')}? 'form-control is-invalid' : 'form-control'" id="name" th:field="*{name}">
+				<div th:errors="*{name}" class="invalid-feedback"></div>
+			</div>
+			<div class="mb-3">
+				<label for="description" class="form-label">Description: </label> 
+				<input type="text" class="form-control" id="description" th:field="*{description}">
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="job"> Owner </label> 
+				<select th:class="${#fields.hasErrors('owner')}? 'form-select is-invalid' : 'form-select'" th:field="*{owner}">
+					<option selected value="">Select</option>
+					<option th:each="user : ${userList}" th:value=${owner.id} th:text="${owner.name}"></option>
+				</select>
+				<div th:errors="*{owner}" class="invalid-feedback"></div>	
+			</div>
+			<button type="submit" class="btn btn-primary">Save</button>
+			<input class="btn btn-primary" type="button" onclick="location.href='/boards';" value="All Boards" />
+		</form>
+		
+	</div>
+</body>
+</html>
+
+
+
+
+
+

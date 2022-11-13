@@ -12,7 +12,7 @@ import javax.persistence.Enumerated;
 import org.springframework.lang.NonNull;
 
 @Entity
-public class Task extends BoardObject {
+public class Task extends AbstractBoardObject {
 
 	@NonNull
 	@Enumerated(EnumType.STRING)

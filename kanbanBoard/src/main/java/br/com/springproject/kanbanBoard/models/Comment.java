@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import org.springframework.lang.NonNull;
 
 @Entity
-public class Comment extends BoardObject {
+public class Comment extends AbstractBoardObject {
 
 	@NonNull
 	private Long taskId;

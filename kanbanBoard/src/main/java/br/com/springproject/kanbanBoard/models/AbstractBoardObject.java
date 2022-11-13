@@ -1,6 +1,6 @@
 package br.com.springproject.kanbanBoard.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,35 +8,33 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
-import org.springframework.lang.NonNull;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, visible = true)
 @MappedSuperclass
-public abstract class BoardObject {
+public class AbstractBoardObject {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long Id;
+	private Long id;
 	
-	@NonNull
-	private String title;
+	private String name;
 	
-	@NonNull
 	private String description;
 	
 	@ManyToOne
-	@NonNull
 	private User owner;
 	
-	@NonNull
-	private Date creationDate;
+	private LocalDate creationDate = LocalDate.now();
 	
-	public BoardObject() { }
+	public AbstractBoardObject() { }
 	
 	
-	public BoardObject(Long id, String title, String description, User owner, Date creationDate) {
+	public AbstractBoardObject(Long id, String name, String description, User owner, LocalDate creationDate) {
 		super();
-		Id = id;
-		this.title = title;
+		this.id = id;
+		this.name = name;
 		this.description = description;
 		this.owner = owner;
 		this.creationDate = creationDate;
@@ -44,19 +42,19 @@ public abstract class BoardObject {
 
 
 	public Long getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(Long id) {
-		Id = id;
+		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getDescription() {
@@ -75,11 +73,11 @@ public abstract class BoardObject {
 		this.owner = owner;
 	}
 
-	public Date getCreationDate() {
+	public LocalDate getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(LocalDate creationDate) {
 		this.creationDate = creationDate;
 	}
 
