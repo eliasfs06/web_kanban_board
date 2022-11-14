@@ -7,12 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import br.com.springproject.kanbanBoard.models.User;
+import br.com.springproject.kanbanBoard.models.Person;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface PersonRepository extends JpaRepository<Person, Long> {
 
-	@Query("SELECT u FROM User u WHERE u.login = :login")
-	public List<User> findByLogin(@Param("login") String login);
-	
+	@Query("SELECT p FROM Person p WHERE p.email = :email")
+	public List<Person> findAllByEmail(@Param("email") String email);
 }

@@ -52,8 +52,7 @@ public class BoardController {
 		try {
 			boardValidator.isNameValid(board.getName());			
 		} catch (Exception e) {
-			br.rejectValue("name", "error.user", e.getMessage());
-			
+			br.rejectValue("name", "error.user", e.getMessage());	
 		}
 		
 		//Validate owner

@@ -18,7 +18,7 @@ public class BoardService {
 
 	public void isNameValid(String boardName) throws Exception {	
 		
-		if(boardName == "") {
+		if(boardName.isEmpty()) {
 			throw new Exception("The board name can not be empty!");
 			
 		} else if (!validateBoardName(boardName)) {
@@ -60,10 +60,8 @@ public class BoardService {
 	 */
 	public boolean validateBoardOwner(User boardOwner) {
 		
-		for(Role role : boardOwner.getRoles()) {
-			if(role == Role.ADMIN || role == Role.BOARD_USE) return true;
-		}
-		
+		if(boardOwner.getRole() == Role.ADMIN || boardOwner.getRole() == Role.BOARD_USE) return true;
+
 		return false;
 	}
 		

@@ -16,10 +16,10 @@
 				<input type="text" class="form-control" id="description" th:field="*{description}">
 			</div>
 			<div class="mb-3">
-				<label class="form-label" for="job"> Owner </label> 
+				<label class="form-label" for="owner"> Owner </label> 
 				<select th:class="${#fields.hasErrors('owner')}? 'form-select is-invalid' : 'form-select'" th:field="*{owner}">
 					<option selected value="">Select</option>
-					<option th:each="user : ${userList}" th:value=${owner.id} th:text="${owner.name}"></option>
+					<option th:each="user : ${userList}" th:value=${user.id} th:text="${user.person.name}"></option>
 				</select>
 				<div th:errors="*{owner}" class="invalid-feedback"></div>	
 			</div>

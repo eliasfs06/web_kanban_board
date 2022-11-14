@@ -1,9 +1,6 @@
 package br.com.springproject.kanbanBoard.models;
 
-import java.util.List;
-
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,17 +18,15 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToOne
+	@OneToOne (cascade = CascadeType.ALL , orphanRemoval = true)
 	private Person person;
 	
 	private String login;
 	
 	private String password;
 	
-    @ElementCollection(targetClass = Role.class)
-    @CollectionTable(name = "user_roles")
     @Enumerated(EnumType.STRING)
-    private List<Role> roles;
+    private Role role;
 	
 	public User() { }
 
@@ -67,12 +62,12 @@ public class User {
 		this.password = password;
 	}
 
-	public List<Role> getRoles() {
-		return roles;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 	
 }
