@@ -30,3 +30,45 @@
     </div>
 </nav>
 </div>
+
+<div th:fragment="delete-board">
+	<div class="modal fade" th:id="staticBackdrop+${board.id}"
+		data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="staticBackdropLabel">Delete confirmation</h1>
+					<div class="modal-header"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+				</div>
+				<div class="modal-body">Are you sure that you want to delete this registry?</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+					<button type="button" class="btn btn-primary"> <a class="link-light" th:href="@{/boards/{boardId}/delete(boardId = ${board.id})}">Yes</a></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div th:fragment="delete-user">
+	<div class="modal fade" th:id="staticBackdrop+${user.id}"
+		data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="staticBackdropLabel">Delete confirmation</h1>
+					<div class="modal-header"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+				</div>
+				<div class="modal-body">Are you sure that you want to delete this user?</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+					<button type="button" class="btn btn-primary"><a class="link-light" th:href="@{/users/{userId}/delete(userId = ${user.id})}">Yes</a></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+

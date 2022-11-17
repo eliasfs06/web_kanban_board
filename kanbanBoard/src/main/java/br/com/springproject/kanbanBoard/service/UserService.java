@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.springproject.kanbanBoard.models.Board;
 import br.com.springproject.kanbanBoard.models.Person;
 import br.com.springproject.kanbanBoard.models.User;
+import br.com.springproject.kanbanBoard.repositories.BoardRepository;
 import br.com.springproject.kanbanBoard.repositories.PersonRepository;
 import br.com.springproject.kanbanBoard.repositories.UserRepository;
 
@@ -18,6 +20,9 @@ public class UserService {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	BoardRepository boardRepository;
 	
 	String[] invalidChars = {"@","#","$","%",")","(","?","=",".","*","[","}","{",",","?","~","=","+","/", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
 	
@@ -61,8 +66,13 @@ public class UserService {
 	 */
 	public boolean validateUserEmail(String userEmail) {
 		
-		List<Person> persons = personRepository.findAllByEmail(userEmail);
-		if(persons.isEmpty()) return true;
+		try {
+			List<Person> persons = personRepository.findAllByEmail(userEmail);
+			if(persons.isEmpty()) return true;
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 		return false;
 		
@@ -84,8 +94,13 @@ public class UserService {
 	 */
 	public boolean validateUserLogin(String userLogin) {
 		
-		List<User> users = userRepository.findByLogin(userLogin);
-		if(users.isEmpty()) return true;
+		try {
+			List<User> users = userRepository.findByLogin(userLogin);
+			if(users.isEmpty()) return true;
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 		return false;
 		
@@ -111,6 +126,19 @@ public class UserService {
 		}
 		return false;
 		
+	}
+	
+	public void userOwnsBoards(Long userId) {
+		
+		try {
+			List<Board> userBoards = boardRepository.findAllByOwner(userId);
+			if(!userBoards.isEmpty());
+				throw new Exception("This user can not be deleted because it owns " + userBoards.size() + " boards.");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
 	}
 	
 

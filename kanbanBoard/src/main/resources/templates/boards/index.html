@@ -6,6 +6,14 @@
 	<div th:replace="~{fragments :: navbar}"></div>
 	
 	<div class="container mt-3">
+		<div class="col-6">
+			<span th:styleappend="${ param.message == null ? 'display:none' : ''}"
+				th:classappend="${(param.message != null && param.error == 1) ? 'error-message form-control is-invalid' : 'sucess-message form-control is-valid'}" 		
+				th:text="${param.message != null ? param.message : ''}"></span>
+		</div>
+	</div>
+	
+	<div class="container mt-3">
 		<div>
 			<h1>Your Kanban Boards</h1>
 		</div>
@@ -24,6 +32,8 @@
 					<td scope="row" th:text="${board.description}"></td>
 					<td scope="row" th:text="${board.owner.person.name}"></td>
 					<td scope="row" th:text="${board.creationDate}"></td>
+					<td scope="row"><a data-bs-toggle="modal" th:attr="data-bs-target='#staticBackdrop'+${board.id}" href="#">Delet</a></td>
+						<div th:replace="~{fragments :: delete-board}"></div>
 				</tr>
 			</tbody>
 		</table>

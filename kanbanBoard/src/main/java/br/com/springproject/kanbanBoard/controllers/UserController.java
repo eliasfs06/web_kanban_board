@@ -3,17 +3,21 @@ package br.com.springproject.kanbanBoard.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.springproject.kanbanBoard.models.Role;
 import br.com.springproject.kanbanBoard.models.User;
+import br.com.springproject.kanbanBoard.repositories.BoardRepository;
 import br.com.springproject.kanbanBoard.repositories.UserRepository;
 import br.com.springproject.kanbanBoard.service.UserService;
+import br.com.springproject.kanbanBoard.utils.Messages;
 
 @Controller
 @RequestMapping("/users")
@@ -21,6 +25,9 @@ public class UserController {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	BoardRepository boardRepository;
 	
 	@Autowired
 	UserService userService;
@@ -91,6 +98,32 @@ public class UserController {
 		ModelAndView mv = new ModelAndView("users/new");
 		List<Role> roles = Role.getAllRoles();
 		mv.addObject("roles", roles);
+		
+		return mv;
+	}
+	
+	@GetMapping("/{id}/delete")
+	public ModelAndView delete(@PathVariable Long id) {
+				
+		ModelAndView mv = new ModelAndView("redirect:/users");
+		
+		try {
+			
+			userService.userOwnsBoards(id);
+
+			userRepository.deleteById(id);
+			mv.addObject("message", Messages.DELETE_USER_SUCESS.getMessage());
+			mv.addObject("error", Messages.DELETE_USER_SUCESS.getError());
+			
+		} catch (EmptyResultDataAccessException e) {
+			e.printStackTrace();
+			mv.addObject("message", Messages.DELETE_USER_ERROR.getMessage());
+			mv.addObject("error", Messages.DELETE_USER_SUCESS.getError());
+			
+		} catch (Exception e) {
+			mv.addObject("message", Messages.DELETE_USER_OWNER_ERROR.getMessage());
+			mv.addObject("error", Messages.DELETE_USER_OWNER_ERROR.getError());
+		}
 		
 		return mv;
 	}
