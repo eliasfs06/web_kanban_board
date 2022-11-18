@@ -1,0 +1,44 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments :: head('Home')}"></head>
+<body>
+	<div th:replace="~{fragments :: navbar}"></div>
+	<div class="container mt-3">
+		<h1>Edit User</h1>
+		<form th:object="${user}" th:action="@{/users/{userId}(userId = ${user.id})}" method="POST">
+			<div class="mb-3">
+				<label for="name" class="form-label"> Name: </label> 
+				<input type="text" th:class="${#fields.hasErrors('person.name')}? 'form-control is-invalid' : 'form-control'" id="name" th:field="*{person.name}">
+				<div th:errors="*{person.name}" class="invalid-feedback"></div>
+			</div>
+			<div class="mb-3">
+				<label for="person" class="form-label"> E-mail: </label> 
+				<input type="email" th:class="${#fields.hasErrors('person.email')}? 'form-control is-invalid' : 'form-control'" id="email" th:field="*{person.email}">
+				<div th:errors="*{person.email}" class="invalid-feedback"></div>
+			</div>
+			<div class="mb-3">
+				<label for="login" class="form-label"> Login: </label> 
+				<input type="text" th:class="${#fields.hasErrors('login')}? 'form-control is-invalid' : 'form-control'" id="login" th:field="*{login}">
+				<div th:errors="*{login}" class="invalid-feedback"></div>
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="role"> Role </label> 
+				<select th:class="${#fields.hasErrors('role')}? 'form-select is-invalid' : 'form-select'" th:field="*{role}">
+					<option selected value="">Select</option>
+					<option th:each="role : ${roles}" th:value=${role} th:text="${role}"></option>
+				</select>
+				<div th:errors="*{role}" class="invalid-feedback"></div>	
+			</div>
+			<button type="submit" class="btn btn-primary">Save</button>
+			<input class="btn btn-primary" type="button" onclick="location.href='/users';" value="All Users" />
+		</form>
+		
+	</div>
+</body>
+</html>
+
+
+
+
+
+

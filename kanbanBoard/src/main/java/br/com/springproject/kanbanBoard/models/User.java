@@ -70,4 +70,20 @@ public class User {
 		this.role = role;
 	}
 	
+	public void setEmail(String email) {
+		this.person.setEmail(email);
+	}
+	
+	public String getEmail(){
+		return this.person.getEmail();
+	}
+	
+	public void setName(String name) {
+		this.person.setName(name);
+	}
+	
+	public String getName(){
+		return this.person.getName();
+	}
+	
 }

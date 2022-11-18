@@ -11,9 +11,13 @@ public enum Messages {
 	DELETE_BOARD_ERROR(true, "An error occurred when deleting the board. Please try again."),
 	DELETE_USER_SUCESS(false, "User deleted successfully."),
 	DELETE_USER_ERROR(true, "An error occurred when deleting the user. Please try again."),
-	DELETE_USER_OWNER_ERROR(true, "This user can not be deleted because it owns one or more boards.");
+	DELETE_USER_OWNER_ERROR(true, "This user can not be deleted because it owns one or more boards."),
+	EDIT_BOARD_SUCESS(false, "Board updated successfully."),
+	EDIT_BOARD_ERROR(true, "An error occurred when updating the board. Please try again."),
+	EDIT_USER_SUCESS(false, "User updated successfully."),
+	EDIT_USER_ERROR(true, "An error occurred when updating the user. Please try again.");
 	
-	private final boolean error;
+	final boolean error;
 	private final String message;
 	
 	Messages(boolean error, String message){

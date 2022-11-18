@@ -6,6 +6,11 @@
 	<div th:replace="~{fragments :: navbar}"></div>
 	
 	<div class="container mt-3">
+		<div>
+			<h1>Users</h1>
+		</div>
+		
+	<div class="container mt-3">
 		<div class="col-6">
 			<span th:styleappend="${ param.message == null ? 'display:none' : ''}"
 				th:classappend="${ (param.error != null && param.error)  ? 'error-message form-control is-invalid' : 'sucess-message form-control is-valid'}" 		
@@ -13,10 +18,6 @@
 		</div>
 	</div>
 	
-	<div class="container mt-3">
-		<div>
-			<h1>Users</h1>
-		</div>
 		<table class="table table-striped table-hover">
 			<thead class="table-hover">
 				<tr>
@@ -30,6 +31,7 @@
 					<td scope="row" th:text="${user.person.name}"></td>
 					<td scope="row" th:text="${user.login}"></td>
 					<td scope="row" th:text="${user.role}"></td>
+					<td scope="row"><a th:href="@{/users/{userId}/edit(userId = ${user.id})}">Edit</a></td>
 					<td scope="row"><a data-bs-toggle="modal" th:attr="data-bs-target='#staticBackdrop'+${user.id}" th:href="@{/users/{userId}/delete(userId = ${user.id})}">Delet</a></td>
 						<div th:replace="~{fragments :: delete-user}"></div>
 				</tr>

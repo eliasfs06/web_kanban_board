@@ -1,4 +1,4 @@
-package br.com.springproject.kanbanBoard.service;
+package br.com.springproject.kanbanBoard.validator;
 
 import java.util.List;
 
@@ -11,17 +11,17 @@ import br.com.springproject.kanbanBoard.models.User;
 import br.com.springproject.kanbanBoard.repositories.BoardRepository;
 
 @Service
-public class BoardService {
+public class BoardValidator {
 	
 	@Autowired
 	BoardRepository boardRepository;
 
-	public void isNameValid(String boardName) throws Exception {	
+	public void isNameValid(Board board) throws Exception {	
 		
-		if(boardName.isEmpty()) {
+		if(board.getName().isEmpty() || board.getName() == "") {
 			throw new Exception("The board name can not be empty!");
 			
-		} else if (!validateBoardName(boardName)) {
+		} else if (!validateBoardName(board)) {
 			throw new Exception("This board name is not available!");
 		}
 		
@@ -30,11 +30,15 @@ public class BoardService {
 	/*
 	 * Can not have two board with the same name. 
 	 */
-	public boolean validateBoardName(String boardName) {
+	public boolean validateBoardName(Board board) {
 		
 		try {	
-			List<Board> allBoards = boardRepository.findAllByName(boardName);
-			if(!allBoards.isEmpty()) return false;			
+			List<Board> allBoards = boardRepository.findAllByName(board.getName());
+			if(!allBoards.isEmpty()) {
+				for(Board b : allBoards) {
+					if(b.getId() != board.getId()) return false;
+				}
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
