@@ -184,4 +184,13 @@ public class BoardController {
 		return mv;
 		
 	}
+	
+	@GetMapping("/{id}")
+	public ModelAndView show(@PathVariable Long id) {
+		
+		ModelAndView mv  = new ModelAndView("boards/show");
+		
+		return mv;
+	}
 }
+

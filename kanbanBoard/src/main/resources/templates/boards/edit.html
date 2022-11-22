@@ -4,7 +4,7 @@
 <body>
 	<div th:replace="~{fragments :: navbar}"></div>
 	<div class="container mt-3">
-		<h1>Edit Board</h1>
+		<h1  class="mb-3">Edit Board</h1>
 		<form th:object="${board}" th:action="@{/boards/{boardId}(boardId = ${board.id})}" method="POST">
 			<div class="mb-3">
 				<label for="name" class="form-label">Board Name: </label> 
