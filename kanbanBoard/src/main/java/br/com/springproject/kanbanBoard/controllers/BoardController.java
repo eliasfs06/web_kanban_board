@@ -1,5 +1,6 @@
 package br.com.springproject.kanbanBoard.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.springproject.kanbanBoard.models.Board;
+import br.com.springproject.kanbanBoard.models.Status;
+import br.com.springproject.kanbanBoard.models.Task;
 import br.com.springproject.kanbanBoard.models.User;
 import br.com.springproject.kanbanBoard.repositories.BoardRepository;
+import br.com.springproject.kanbanBoard.repositories.TaskRepository;
 import br.com.springproject.kanbanBoard.repositories.UserRepository;
 import br.com.springproject.kanbanBoard.utils.Messages;
 import br.com.springproject.kanbanBoard.validator.BoardValidator;
@@ -29,6 +33,9 @@ public class BoardController {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	TaskRepository taskRepository;
 	
 	@Autowired
 	BoardValidator boardValidator;
@@ -189,6 +196,25 @@ public class BoardController {
 	public ModelAndView show(@PathVariable Long id) {
 		
 		ModelAndView mv  = new ModelAndView("boards/show");
+		
+		List<Task> allTasks = taskRepository.findAllByBoardId(id);
+		List<Task> toDoTasks = new ArrayList<>();
+		List<Task> doingTasks = new ArrayList<>();
+		List<Task> doneTasks = new ArrayList<>();
+		
+		for(Task t : allTasks) {
+			if(t.getStatus() == Status.TO_DO) {
+				toDoTasks.add(t);
+			} else if (t.getStatus() == Status.DOING) {
+				doingTasks.add(t);
+			} else if (t.getStatus() == Status.DONE) {
+				doneTasks.add(t);
+			}
+		}
+		
+		mv.addObject("toDoTasks", toDoTasks);
+		mv.addObject("doingTasks", doingTasks);
+		mv.addObject("doneTasks", doneTasks);
 		
 		return mv;
 	}

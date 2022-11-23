@@ -16,18 +16,21 @@
 			<tbody class="table-hover">
 				<tr>
 					<td scope="row">
-						<ul class="list-group">
-						  <li class="list-group-item">A second item</li>
+						<p class="list-group-item" th:styleappend="${toDoTasks.isEmpty() ? '' : 'display:none'}">Nothing here!</p>						
+						<ul class="list-group"  th:each="task : ${toDoTasks}">						 
+						  <li class="list-group-item" th:text="${task.name}"></li>
 						</ul>
 					</td>
 					<td scope="row">
-						<ul class="list-group">
-						  <li class="list-group-item active" aria-current="true">An active item</li>
+						<p class="list-group-item" th:styleappend="${doingTasks.isEmpty() ? '' : 'display:none'}">Nothing here!</p>																
+						<ul class="list-group"  th:each="task : ${doingTasks}">
+						  <li class="list-group-item" th:text="${task.name}"></li>
 						</ul>
 					</td>
 					<td scope="row">
-						<ul class="list-group">
-						  <li class="list-group-item">A second item</li>
+						<p class="list-group-item" th:styleappend="${doneTasks.isEmpty() ? '' : 'display:none'}">Nothing here!</p>											
+						<ul class="list-group"  th:each="task : ${doneTasks}">
+						  <li class="list-group-item" th:text="${task.name}"></li>
 						</ul>
 					</td>
 				</tr>

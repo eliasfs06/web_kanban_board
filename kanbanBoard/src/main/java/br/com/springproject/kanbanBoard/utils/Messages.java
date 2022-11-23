@@ -17,7 +17,7 @@ public enum Messages {
 	EDIT_USER_SUCESS(false, "User updated successfully."),
 	EDIT_USER_ERROR(true, "An error occurred when updating the user. Please try again.");
 	
-	final boolean error;
+	private final boolean error;
 	private final String message;
 	
 	Messages(boolean error, String message){
