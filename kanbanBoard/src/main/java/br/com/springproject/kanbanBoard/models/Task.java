@@ -1,13 +1,11 @@
 package br.com.springproject.kanbanBoard.models;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 
 import org.springframework.lang.NonNull;
 
@@ -21,9 +19,8 @@ public class Task extends AbstractBoardObject {
 	@NonNull
 	private Long boardId;
 	
-    @ElementCollection(targetClass = Role.class)
-    @CollectionTable(name = "task_assignees")
-	private List<User> assignees;
+	@ManyToOne
+	private User assignedTo;
 	
 	private Date endDate;
 
@@ -31,11 +28,11 @@ public class Task extends AbstractBoardObject {
 		super();
 	}
 
-	public Task(Status status, Long boardId, List<User> assignees, Date endDate) {
+	public Task(Status status, Long boardId, User assignedTo, Date endDate) {
 		super();
 		this.status = status;
 		this.boardId = boardId;
-		this.assignees = assignees;
+		this.assignedTo = assignedTo;
 		this.endDate = endDate;
 	}
 
@@ -55,12 +52,12 @@ public class Task extends AbstractBoardObject {
 		this.boardId = boardId;
 	}
 
-	public List<User> getAssignees() {
-		return assignees;
+	public User getAssignedTo() {
+		return assignedTo;
 	}
 
-	public void setAssignees(List<User> assignees) {
-		this.assignees = assignees;
+	public void setAssignedTo(User assignedTo) {
+		this.assignedTo = assignedTo;
 	}
 
 	public Date getEndDate() {

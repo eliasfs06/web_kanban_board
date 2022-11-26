@@ -83,7 +83,11 @@ public class BoardController {
 		}
 		
 		ModelAndView mv = new ModelAndView("redirect:/boards");	
-		boardRepository.save(board);	
+		try {
+			boardRepository.save(board);	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return mv;
 	}
@@ -192,12 +196,12 @@ public class BoardController {
 		
 	}
 	
-	@GetMapping("/{id}")
-	public ModelAndView show(@PathVariable Long id) {
+	@GetMapping("/{boardId}")
+	public ModelAndView show(@PathVariable Long boardId) {
 		
 		ModelAndView mv  = new ModelAndView("boards/show");
 		
-		List<Task> allTasks = taskRepository.findAllByBoardId(id);
+		List<Task> allTasks = taskRepository.findAllByBoardId(boardId);
 		List<Task> toDoTasks = new ArrayList<>();
 		List<Task> doingTasks = new ArrayList<>();
 		List<Task> doneTasks = new ArrayList<>();
@@ -212,6 +216,7 @@ public class BoardController {
 			}
 		}
 		
+		mv.addObject(boardId);
 		mv.addObject("toDoTasks", toDoTasks);
 		mv.addObject("doingTasks", doingTasks);
 		mv.addObject("doneTasks", doneTasks);
