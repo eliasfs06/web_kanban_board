@@ -1,6 +1,7 @@
 package br.com.springproject.kanbanBoard.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,24 @@ public class TaskController {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@GetMapping("/{id}")
+	public ModelAndView show(@PathVariable Long id) {
+		
+		ModelAndView mv = new ModelAndView("tasks/show");
+		
+		try {
+			Optional<Task> task = taskRepository.findById(id);
+			if(task.isPresent()) {
+				mv.addObject("task", task.get());
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return mv;
+	}
 	
 	@GetMapping("/new/{boardId}")
 	public ModelAndView newTask(Task task, @PathVariable Long boardId) {

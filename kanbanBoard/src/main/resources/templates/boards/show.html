@@ -1,6 +1,15 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments :: head('Home')}"></head>
+<style>
+    .item {
+        width: 30%;
+        overflow: hidden;
+    	text-overflow: ellipsis;
+   		white-space: nowrap;
+    	word-wrap: hyphenate;
+      }
+</style>
 <body>
 	<div th:replace="~{fragments :: navbar}"></div>
 	<div class="container mt-3">
@@ -18,19 +27,24 @@
 					<td scope="row">
 						<p class="list-group-item" th:styleappend="${toDoTasks.isEmpty() ? '' : 'display:none'}">Nothing here!</p>						
 						<ul class="list-group"  th:each="task : ${toDoTasks}">						 
-						  <li class="list-group-item" th:text="${task.name}"></li>
+						  <li class="list-group-item item">
+						  	<span class="pe-3" th:text="${task.name}"></span>
+						  	<a th:href="@{/tasks/{taskId}(taskId = ${task.id})}">Show</a>
+						  </li>
 						</ul>
 					</td>
 					<td scope="row">
 						<p class="list-group-item" th:styleappend="${doingTasks.isEmpty() ? '' : 'display:none'}">Nothing here!</p>																
 						<ul class="list-group"  th:each="task : ${doingTasks}">
-						  <li class="list-group-item" th:text="${task.name}"></li>
+						  <li class="list-group-item item" th:text="${task.name}">
+						  <a th:href="@{/tasks/{taskId}(taskId = ${task.id})}">Show</a></li>					  
 						</ul>
 					</td>
 					<td scope="row">
 						<p class="list-group-item" th:styleappend="${doneTasks.isEmpty() ? '' : 'display:none'}">Nothing here!</p>											
 						<ul class="list-group"  th:each="task : ${doneTasks}">
-						  <li class="list-group-item" th:text="${task.name}"></li>
+						  <li class="list-group-item item" th:text="${task.name}">
+						  <a th:href="@{/tasks/{taskId}(taskId = ${task.id})}">Show</a></li>					  				  
 						</ul>
 					</td>
 				</tr>
