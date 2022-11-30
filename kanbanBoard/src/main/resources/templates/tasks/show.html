@@ -14,10 +14,21 @@
 		  <label class="form-label fw-bold"> Creation Date: </label> 
 		  <li class="list-group-item" th:text="${task.creationDate}"></li>
 		</ul>
-		<a th:href="@{/boards/{boardId}(boardId = ${task.boardId})}">Go Back To Board</a></div>
+		<br>
+		<ul class="list-group" th:each="c : ${comments}">
+			<ul class="list-group">
+			 	<span class="list-group-item" th:text="${c.owner == null ? '' : c.owner.person.name}"></span>
+			 	<span class="list-group-item" th:text="${c.description == null ? '' : c.description}"></span>
+		 	</ul>
+		 	<br>
+		</ul>
+		<br>
+		<a th:href="@{/boards/{boardId}(boardId = ${task.boardId})}">Go Back To Board</a>
+		<a th:href="@{/comments/new/{taskId}(taskId = ${task.id})}">New Task</a>
 	</div>
 </body>
 </html>
+
 
 
 

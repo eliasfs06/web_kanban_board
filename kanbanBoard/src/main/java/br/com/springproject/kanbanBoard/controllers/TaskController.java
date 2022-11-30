@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.com.springproject.kanbanBoard.models.Comment;
 import br.com.springproject.kanbanBoard.models.Status;
 import br.com.springproject.kanbanBoard.models.Task;
 import br.com.springproject.kanbanBoard.models.User;
+import br.com.springproject.kanbanBoard.repositories.CommentRepository;
 import br.com.springproject.kanbanBoard.repositories.TaskRepository;
 import br.com.springproject.kanbanBoard.repositories.UserRepository;
 import br.com.springproject.kanbanBoard.utils.Messages;
@@ -34,6 +36,9 @@ public class TaskController {
 	@Autowired
 	UserRepository userRepository;
 	
+	@Autowired
+	CommentRepository commentRespository;
+	
 	@GetMapping("/{id}")
 	public ModelAndView show(@PathVariable Long id) {
 		
@@ -44,6 +49,9 @@ public class TaskController {
 			if(task.isPresent()) {
 				mv.addObject("task", task.get());
 			}
+			
+			List<Comment> comments = commentRespository.findAllByTaskId(id);
+			mv.addObject("comments", comments);
 			
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -1,0 +1,33 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head th:replace="~{fragments :: head('Home')}"></head>
+<body>
+	<div th:replace="~{fragments :: navbar}"></div>
+	<div class="container mt-3">
+		<h1  class="mb-3">New Task</h1>
+		<form th:object="${comment}" action="/comments" method="POST">
+			<div class="mb-3">
+				<label for="description" class="form-label">Description: </label> 
+				<input type="text" th:class="${#fields.hasErrors('description')}? 'form-control is-invalid' : 'form-control'" id="description" th:field="*{description}">
+				<div th:errors="*{description}" class="invalid-feedback"></div>			</div>
+			<div class="mb-3">
+				<label class="form-label" for="owner"> Owner </label> 
+				<select th:class="${#fields.hasErrors('owner')}? 'form-select is-invalid' : 'form-select'" th:field="*{owner}">
+					<option selected value="">Select</option>
+					<option th:each="user : ${userList}" th:value=${user.id} th:text="${user.person.name}"></option>
+				</select>
+				<div th:errors="*{owner}" class="invalid-feedback"></div>	
+			</div>
+			<input type="hidden" th:field="*{creationDate}">
+			<input type="hidden" th:field="*{taskId}">
+			
+			<button type="submit" class="btn btn-primary">Save</button>
+		</form>
+	</div>
+</body>
+</html>
+
+
+
+	
