@@ -136,7 +136,7 @@ public class UserValidator {
 		
 		try {
 			List<Board> userBoards = boardRepository.findAllByOwner(userId);
-			if(!userBoards.isEmpty());
+			if(userBoards.size() > 0)
 				throw new Exception("This user can not be deleted because it owns " + userBoards.size() + " boards.");
 			
 		} catch (Exception e) {

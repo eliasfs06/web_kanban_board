@@ -115,8 +115,8 @@ public class BoardController {
 			
 		} catch (EmptyResultDataAccessException e) {
 			e.printStackTrace();
-			mv.addObject("message", Messages.DELETE_BOARD_SUCESS.getMessage());
-			mv.addObject("error", Messages.DELETE_BOARD_SUCESS.getError());
+			mv.addObject("message", Messages.DELETE_BOARD_ERROR.getMessage());
+			mv.addObject("error", Messages.DELETE_BOARD_ERROR.getError());
 		}
 		
 		return mv;

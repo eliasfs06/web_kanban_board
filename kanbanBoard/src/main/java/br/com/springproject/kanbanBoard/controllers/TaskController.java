@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import br.com.springproject.kanbanBoard.models.Task;
 import br.com.springproject.kanbanBoard.models.User;
 import br.com.springproject.kanbanBoard.repositories.TaskRepository;
 import br.com.springproject.kanbanBoard.repositories.UserRepository;
+import br.com.springproject.kanbanBoard.utils.Messages;
 import br.com.springproject.kanbanBoard.validator.TaskValidator;
 
 @Controller
@@ -96,4 +98,24 @@ public class TaskController {
 		
 		return mv;
 	}
+	
+	@GetMapping("/{id}/delete")
+	public ModelAndView delete(@PathVariable Long id) {
+		
+		ModelAndView mv = new ModelAndView("redirect:/boards");
+		
+		try {
+			taskRepository.deleteById(id);
+			mv.addObject("message", Messages.DELETE_TASK_SUCESS.getMessage());
+			mv.addObject("error", Messages.DELETE_TASK_SUCESS.getError());
+			
+		} catch (EmptyResultDataAccessException e) {
+			e.printStackTrace();
+			mv.addObject("message", Messages.DELETE_TASK_ERROR.getMessage());
+			mv.addObject("error", Messages.DELETE_TASK_ERROR.getError());
+		}
+		
+		return mv;
+	}
+	
 }

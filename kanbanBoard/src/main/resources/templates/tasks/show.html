@@ -10,7 +10,7 @@
 		  <label class="form-label fw-bold"> Description: </label> 
 		  <li class="list-group-item" th:text="${task.description}"></li>
 		  <label class="form-label fw-bold"> Assigned To: </label> 
-		  <li class="list-group-item" th:text="${task.assignedTo.person.name}"></li>
+		  <span class="list-group-item" th:text="${task.assignedTo == null ? 'No one' : task.assignedTo.person.name}"></span>
 		  <label class="form-label fw-bold"> Creation Date: </label> 
 		  <li class="list-group-item" th:text="${task.creationDate}"></li>
 		</ul>

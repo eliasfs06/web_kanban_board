@@ -17,6 +17,7 @@ import br.com.springproject.kanbanBoard.models.Role;
 import br.com.springproject.kanbanBoard.models.User;
 import br.com.springproject.kanbanBoard.repositories.BoardRepository;
 import br.com.springproject.kanbanBoard.repositories.UserRepository;
+import br.com.springproject.kanbanBoard.service.UserService;
 import br.com.springproject.kanbanBoard.utils.Messages;
 import br.com.springproject.kanbanBoard.validator.UserValidator;
 
@@ -32,6 +33,9 @@ public class UserController {
 	
 	@Autowired
 	UserValidator userValidator;
+	
+	@Autowired
+	UserService userService;
 
 	@GetMapping("")
 	public ModelAndView index() {
@@ -115,9 +119,7 @@ public class UserController {
 		
 		try {
 			
-			userValidator.userOwnsBoards(id);
-
-			userRepository.deleteById(id);
+			userService.deleteUser(id);
 			mv.addObject("message", Messages.DELETE_USER_SUCESS.getMessage());
 			mv.addObject("error", Messages.DELETE_USER_SUCESS.getError());
 			
