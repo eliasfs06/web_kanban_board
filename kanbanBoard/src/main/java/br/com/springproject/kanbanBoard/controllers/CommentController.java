@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import br.com.springproject.kanbanBoard.models.User;
 import br.com.springproject.kanbanBoard.repositories.CommentRepository;
 import br.com.springproject.kanbanBoard.repositories.TaskRepository;
 import br.com.springproject.kanbanBoard.repositories.UserRepository;
+import br.com.springproject.kanbanBoard.utils.Messages;
 import br.com.springproject.kanbanBoard.validator.CommentValidator;
 
 @Controller
@@ -81,6 +83,28 @@ public class CommentController {
 		Optional<Task> task = taskRepository.findById(comment.getTaskId());
 		ra.addAttribute("task", task.get());
 		ModelAndView mv = new ModelAndView("redirect:/tasks/"+comment.getTaskId());	
+		
+		return mv;
+	}
+	
+	@GetMapping("/{id}/delete")
+	public ModelAndView delete(@PathVariable Long id, RedirectAttributes ra) {
+		
+		Optional<Comment> comment = commentRepository.findById(id);
+		Optional<Task> task = taskRepository.findById(comment.get().getTaskId());
+		ra.addAttribute("task", task.get());
+		ModelAndView mv = new ModelAndView("redirect:/tasks/"+comment.get().getTaskId());	
+		
+		try {
+			commentRepository.deleteById(id);
+			mv.addObject("message", Messages.DELETE_COMMENT_SUCESS.getMessage());
+			mv.addObject("error", Messages.DELETE_COMMENT_SUCESS.getError());
+			
+		} catch (EmptyResultDataAccessException e) {
+			e.printStackTrace();
+			mv.addObject("message", Messages.DELETE_COMMENT_ERROR.getMessage());
+			mv.addObject("error", Messages.DELETE_COMMENT_ERROR.getError());
+		}
 		
 		return mv;
 	}

@@ -17,7 +17,9 @@ public enum Messages {
 	EDIT_USER_SUCESS(false, "User updated successfully."),
 	EDIT_USER_ERROR(true, "An error occurred when updating the user. Please try again."),
 	DELETE_TASK_SUCESS(false, "Task deleted successfully."),
-	DELETE_TASK_ERROR(true, "An error occurred when deleting the task Please try again.");
+	DELETE_TASK_ERROR(true, "An error occurred when deleting the task. Please try again."),
+	DELETE_COMMENT_SUCESS(false, "Comment deleted successfully."),
+	DELETE_COMMENT_ERROR(true, "An error occurred when deleting the Comment. Please try again.");
 	
 	private final boolean error;
 	private final String message;

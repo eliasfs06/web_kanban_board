@@ -4,6 +4,15 @@
 <head th:replace="~{fragments :: head('Home')}"></head>
 <body>
 	<div th:replace="~{fragments :: navbar}"></div>
+	
+	<div class="container mt-3">
+		<div class="col-6">
+			<span th:styleappend="${ param.message == null ? 'display:none' : ''}"
+				th:classappend="${(param.message != null && param.error == 1) ? 'error-message form-control is-invalid' : 'sucess-message form-control is-valid'}" 		
+				th:text="${param.message != null ? param.message : ''}"></span>
+		</div>
+	</div>
+	
 	<div class="container mt-3">
 		<h1 th:text="${task.name}"></h1>		
 		<ul class="list-group">
@@ -17,10 +26,12 @@
 		<br>
 		<ul class="list-group" th:each="c : ${comments}">
 			<ul class="list-group">
-			 	<span class="list-group-item" th:text="${c.owner == null ? '' : c.owner.person.name}"></span>
-			 	<span class="list-group-item" th:text="${c.description == null ? '' : c.description}"></span>
+				 <span th:text="${c.owner == null ? '' : c.owner.person.name}"></span>
+				<li class="list-group-item item">
+				 	<span  th:text="${c.description == null ? '' : c.description}"></span>
+		 		</li>
+		 		<a th:href="@{/comments/{commentId}/delete(commentId = ${c.id})}">Delet</a><br>
 		 	</ul>
-		 	<br>
 		</ul>
 		<br>
 		<a th:href="@{/boards/{boardId}(boardId = ${task.boardId})}">Go Back To Board</a>
