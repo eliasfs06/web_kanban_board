@@ -17,7 +17,7 @@ public class TaskValidator {
 
 	public void isNameValid(Task task) throws Exception {	
 		
-		if(task.getName().isEmpty() || task.getName() == "") {
+		if(task.getName().isEmpty() || task.getName().trim() == "") {
 			throw new Exception("The task name can not be empty!");		
 		} else if(task.getName().length() > 30) {
 			throw new Exception("The task name must be 30 characters or less!");

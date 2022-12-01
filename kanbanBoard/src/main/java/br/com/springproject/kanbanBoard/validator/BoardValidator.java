@@ -18,7 +18,7 @@ public class BoardValidator {
 
 	public void isNameValid(Board board) throws Exception {	
 		
-		if(board.getName().isEmpty() || board.getName() == "") {
+		if(board.getName().isEmpty() || board.getName().trim() == "") {
 			throw new Exception("The board name can not be empty!");
 			
 		} else if (!validateBoardName(board)) {

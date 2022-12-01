@@ -3,6 +3,15 @@
 <head th:replace="~{fragments :: head('Home')}"></head>
 <body>
 	<div th:replace="~{fragments :: navbar}"></div>
+	
+	<div class="container mt-3">
+		<div class="col-6">
+			<span th:styleappend="${ param.message == null ? 'display:none' : ''}"
+				th:classappend="${(param.message != null && param.error == 1) ? 'error-message form-control is-invalid' : 'sucess-message form-control is-valid'}" 		
+				th:text="${param.message != null ? param.message : ''}"></span>
+		</div>
+	</div>
+	
 	<div class="container mt-3">
 		<h1 class="mb-3">Your tasks</h1>
 		<div class="container text-center">
@@ -14,12 +23,12 @@
 				</thead>
 				<tbody class="table-hover">
 					<tr><td scope="row">
-							<p class="list-group-item" th:styleappend="${toDoTasks.isEmpty() ? '' : 'display:none'}">Nothing here!</p>						
 							<ul class="list-group"  th:each="task : ${toDoTasks}">						 
 							  <li class="list-group-item item">
 							  	<span class="pe-3" th:text="${task.name}"></span>
 							  	<a th:href="@{/tasks/{taskId}(taskId = ${task.id})}">Show</a>
-							 	<a th:href="@{/tasks/{taskId}/delete(taskId = ${task.id})}">Delet</a>							 						  	
+							 	<a th:href="@{/tasks/{taskId}/delete(taskId = ${task.id})}">Delet</a>
+							 	<a th:href="@{/tasks/move/doing/{taskId}(taskId = ${task.id})}">Doing</a>
 							  </li>
 							</ul>
 						</td></tr>
@@ -38,6 +47,8 @@
 							  	<span class="pe-3" th:text="${task.name}"></span>
 							  	<a th:href="@{/tasks/{taskId}(taskId = ${task.id})}">Show</a>
 							 	<a th:href="@{/tasks/{taskId}/delete(taskId = ${task.id})}">Delet</a>
+							 	<a th:href="@{/tasks/move/toDo/{taskId}(taskId = ${task.id})}">ToDo</a>							 	
+							 	<a th:href="@{/tasks/move/done/{taskId}(taskId = ${task.id})}">Done</a>
 							  </li>
 							</ul>
 						</td></tr>
@@ -55,6 +66,9 @@
 							  <li class="list-group-item item">
 							  	<span class="pe-3" th:text="${task.name}"></span>
 							  	<a th:href="@{/tasks/{taskId}(taskId = ${task.id})}">Show</a>
+							 	<a th:href="@{/tasks/{taskId}/delete(taskId = ${task.id})}">Delet</a>
+							 	<a th:href="@{/tasks/move/toDo/{taskId}(taskId = ${task.id})}">ToDo</a>							 	
+							 	<a th:href="@{/tasks/move/doing/{taskId}(taskId = ${task.id})}">Doing</a>							  	
 							  </li>
 							</ul>
 						</td></tr>

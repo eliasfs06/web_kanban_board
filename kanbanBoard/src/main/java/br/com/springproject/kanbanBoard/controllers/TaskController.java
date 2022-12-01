@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.springproject.kanbanBoard.models.Board;
 import br.com.springproject.kanbanBoard.models.Comment;
 import br.com.springproject.kanbanBoard.models.Status;
 import br.com.springproject.kanbanBoard.models.Task;
 import br.com.springproject.kanbanBoard.models.User;
+import br.com.springproject.kanbanBoard.repositories.BoardRepository;
 import br.com.springproject.kanbanBoard.repositories.CommentRepository;
 import br.com.springproject.kanbanBoard.repositories.TaskRepository;
 import br.com.springproject.kanbanBoard.repositories.UserRepository;
@@ -38,6 +41,9 @@ public class TaskController {
 	
 	@Autowired
 	CommentRepository commentRespository;
+	
+	@Autowired
+	BoardRepository boardRepository;
 	
 	@GetMapping("/{id}")
 	public ModelAndView show(@PathVariable Long id) {
@@ -72,8 +78,9 @@ public class TaskController {
 	}
 	
 	@PostMapping
-	public ModelAndView create(Task task, BindingResult br) {	
+	public ModelAndView create(Task task, BindingResult br, RedirectAttributes ra) {	
 		
+		ModelAndView mv = new ModelAndView("redirect:/boards/"+task.getBoardId());	
 		//Validate name
 		try {
 			taskValidator.isNameValid(task);			
@@ -89,29 +96,31 @@ public class TaskController {
 		
 		
 		if(br.hasErrors()) {
-			ModelAndView mv = new ModelAndView("tasks/new");
+			mv = new ModelAndView("tasks/new");
 			List<User> userList = userRepository.findAll();
 			mv.addObject("userList", userList);
 			
 			return mv;
 		}
 		
-		ModelAndView mv = new ModelAndView("redirect:/boards");	
 		try {
 			task.setStatus(Status.TO_DO);
 			taskRepository.save(task);	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
-		
+				
+		Optional<Board> board = boardRepository.findById(task.getBoardId());
+		ra.addFlashAttribute("board", board.get());
 		return mv;
 	}
 	
 	@GetMapping("/{id}/delete")
-	public ModelAndView delete(@PathVariable Long id) {
+	public ModelAndView delete(@PathVariable Long id, RedirectAttributes ra) {
 		
 		ModelAndView mv = new ModelAndView("redirect:/boards");
-		
+		Optional<Task> task = taskRepository.findById(id);
+
 		try {
 			taskRepository.deleteById(id);
 			mv.addObject("message", Messages.DELETE_TASK_SUCESS.getMessage());
@@ -123,6 +132,35 @@ public class TaskController {
 			mv.addObject("error", Messages.DELETE_TASK_ERROR.getError());
 		}
 		
+		Optional<Board> board = boardRepository.findById(task.get().getBoardId());
+		ra.addFlashAttribute("board", board.get());
+		mv.setViewName("redirect:/boards/"+task.get().getBoardId());
+		return mv;
+	}
+	
+	@GetMapping("/move/{movement}/{taskId}")
+	public ModelAndView move(@PathVariable String movement, @PathVariable Long taskId, RedirectAttributes ra){
+		
+		Optional<Task> task = taskRepository.findById(taskId);
+		
+		if(movement.equals("toDo")) {
+			task.get().setStatus(Status.TO_DO);
+		} else if(movement.equals("doing")) {
+			task.get().setStatus(Status.DOING);
+		} else if(movement.equals("done")) {
+			task.get().setStatus(Status.DONE);
+		}
+		
+		try {
+			taskRepository.save(task.get());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		ModelAndView mv = new ModelAndView("redirect:boards/"+task.get().getBoardId());
+		Optional<Board> board = boardRepository.findById(task.get().getBoardId());
+		ra.addFlashAttribute("board", board.get());
+		mv.setViewName("redirect:/boards/"+task.get().getBoardId());
 		return mv;
 	}
 	

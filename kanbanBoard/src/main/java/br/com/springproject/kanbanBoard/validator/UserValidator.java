@@ -27,7 +27,7 @@ public class UserValidator {
 	
 	public void isNameValid(User user) throws Exception {	
 		
-		if(user.getName().isEmpty()) {
+		if(user.getName().isEmpty() || user.getName().trim() == "") {
 			throw new Exception("The user name can not be empty!");
 			
 		} else if (!validateUserName(user.getName())) {
@@ -81,7 +81,7 @@ public class UserValidator {
 	
 	public void isLoginValid(User user) throws Exception {	
 		
-		if(user.getLogin().isEmpty()) {
+		if(user.getLogin().isEmpty() || user.getLogin().trim() == "") {
 			throw new Exception("The user login can not be empty!");
 			
 		} else if (!validateUserLogin(user)) {
