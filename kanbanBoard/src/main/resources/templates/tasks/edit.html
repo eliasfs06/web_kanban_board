@@ -1,0 +1,40 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head th:replace="~{fragments :: head('Home')}"></head>
+<body>
+	<div th:replace="~{fragments :: navbar}"></div>
+	<div class="container mt-3">
+		<h1  class="mb-3">Edit Task</h1>
+		<form th:object="${task}" th:action="@{/tasks/{taskId}(taskId = ${task.id})}" method="POST">
+			<div class="mb-3">
+				<label for="name" class="form-label">Task Name: </label> 
+				<input type="text" th:class="${#fields.hasErrors('name')}? 'form-control is-invalid' : 'form-control'" id="name" th:field="*{name}">
+				<div th:errors="*{name}" class="invalid-feedback"></div>
+			</div>
+			<div class="mb-3">
+				<label for="description" class="form-label">Description: </label> 
+				<input type="text" class="form-control" id="description" th:field="*{description}">
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="assignedTo"> Assign to: </label> 
+				<select th:class="${#fields.hasErrors('assignedTo')}? 'form-select is-invalid' : 'form-select'" th:field="*{assignedTo}">
+					<option selected value="">Select</option>
+					<option th:each="user : ${userList}" th:value=${user.id} th:text="${user.person.name}"></option>
+				</select>
+				<div th:errors="*{assignedTo}" class="invalid-feedback"></div>	
+			</div>
+			<input type="hidden" th:field="*{status}">
+			<input type="hidden" th:field="*{creationDate}">
+			<input type="hidden" th:field="*{boardId}">
+			
+			<button type="submit" class="btn btn-primary">Save</button>
+		</form>
+	</div>
+</body>
+</html>
+
+
+
+
+

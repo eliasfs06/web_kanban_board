@@ -30,12 +30,13 @@
 				<li class="list-group-item item">
 				 	<span  th:text="${c.description == null ? '' : c.description}"></span>
 		 		</li>
-		 		<a th:href="@{/comments/{commentId}/delete(commentId = ${c.id})}">Delet</a><br>
+		 		<a th:href="@{/comments/{commentId}/delete(commentId = ${c.id})}"><i class="fa-solid fa-trash"></i></a><br>
 		 	</ul>
 		</ul>
 		<br>
-		<a th:href="@{/boards/{boardId}(boardId = ${task.boardId})}">Go Back To Board</a>
-		<a th:href="@{/comments/new/{taskId}(taskId = ${task.id})}">New Comment</a>
+		<a class="btn btn-primary" role="button" th:href="@{/boards/{boardId}(boardId = ${task.boardId})}">Go Back To Board</a>
+		<a class="btn btn-primary" role="button" th:href="@{/tasks/{taskId}/edit(taskId = ${task.id})}">Edit</a>
+		<a class="btn btn-primary" role="button" th:href="@{/comments/new/{taskId}(taskId = ${task.id})}">New Comment</a>
 	</div>
 </body>
 </html>

@@ -164,4 +164,76 @@ public class TaskController {
 		return mv;
 	}
 	
+	@GetMapping("/{id}/edit")
+	public ModelAndView edit(@PathVariable Long id) {
+		
+		ModelAndView mv = new ModelAndView("tasks/edit");
+		
+		try {
+			Optional<Task> taskOpt = taskRepository.findById(id);
+			List<User> userList = userRepository.findAll();
+			
+			if(taskOpt.isPresent()) {
+				mv.addObject("task", taskOpt.get());
+				mv.addObject("userList", userList);
+				return mv;
+			}
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		mv.setViewName("redirect:/boards");
+		
+		return mv;
+	}
+	
+	@PostMapping("/{id}")
+	public ModelAndView update(@PathVariable Long id, Task taskForm, BindingResult br, RedirectAttributes ra) {
+		
+		Optional<Task> taskOpt = taskRepository.findById(id);
+		ModelAndView mv = new ModelAndView("redirect:/boards/"+taskOpt.get().getBoardId());	
+		//Validate name
+		try {
+			taskValidator.isNameValid(taskForm);			
+		} catch (Exception e) {
+			br.rejectValue("name", "error.user", e.getMessage());	
+		}
+		
+		try {
+			taskValidator.isAssigneToValid(taskForm);
+		} catch (Exception e) {
+			br.rejectValue("assignedTo", "error.user", e.getMessage());
+		}
+		
+		
+		if(br.hasErrors()) {
+			mv = new ModelAndView("tasks/new");
+			List<User> userList = userRepository.findAll();
+			mv.addObject("userList", userList);
+			
+			return mv;
+		}
+		
+		Task task = taskOpt.get();
+		task.setName(taskForm.getName());
+		task.setDescription(taskForm.getDescription());
+		task.setAssignedTo(taskForm.getAssignedTo());
+		
+		try {
+			taskRepository.save(task);
+			mv.addObject("message", Messages.EDIT_TASK_SUCESS.getMessage());
+			mv.addObject("error", Messages.EDIT_TASK_SUCESS.getError());
+			
+		} catch(Exception e){
+			e.printStackTrace();
+			mv.addObject("message", Messages.EDIT_TASK_ERROR.getMessage());
+			mv.addObject("error", Messages.EDIT_TASK_ERROR.getError());
+		}
+				
+		Optional<Board> board = boardRepository.findById(taskOpt.get().getBoardId());
+		ra.addFlashAttribute("board", board.get());
+		return mv;
+	}
+	
 }

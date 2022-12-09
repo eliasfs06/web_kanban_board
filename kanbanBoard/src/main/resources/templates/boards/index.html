@@ -32,9 +32,9 @@
 					<td scope="row" th:text="${board.description}"></td>
 					<td scope="row" th:text="${board.owner.person.name}"></td>
 					<td scope="row" th:text="${board.creationDate}"></td>
-					<td scope="row"><a th:href="@{/boards/{boardId}(boardId = ${board.id})}">Show</a></td>
-					<td scope="row"><a th:href="@{/boards/{boardId}/edit(boardId = ${board.id})}">Edit</a></td>
-					<td scope="row"><a data-bs-toggle="modal" th:attr="data-bs-target='#staticBackdrop'+${board.id}" href="#">Delet</a></td>
+					<td scope="row"><a th:href="@{/boards/{boardId}(boardId = ${board.id})}"><i class="fa-solid fa-eye"></i></a></td>
+					<td scope="row"><a th:href="@{/boards/{boardId}/edit(boardId = ${board.id})}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+					<td scope="row"><a data-bs-toggle="modal" th:attr="data-bs-target='#staticBackdrop'+${board.id}" href="#"><i class="fa-solid fa-trash"></i></a></td>
 						<div th:replace="~{fragments :: delete-board}"></div>
 				</tr>
 			</tbody>
