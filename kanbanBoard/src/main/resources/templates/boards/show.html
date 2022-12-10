@@ -25,10 +25,10 @@
 					<tr><td scope="row">
 							<ul class="list-group"  th:each="task : ${toDoTasks}">						 
 							  <li class="list-group-item item">
-							  	<span class="pe-3" th:text="${task.name}"></span>
-							  	<a th:href="@{/tasks/{taskId}(taskId = ${task.id})}"><i class="fa-solid fa-eye"></i></a>
-							 	<a th:href="@{/tasks/{taskId}/delete(taskId = ${task.id})}"><i class="fa-solid fa-trash"></i></a>
-							 	<a th:href="@{/tasks/move/doing/{taskId}(taskId = ${task.id})}"><i class="fa-solid fa-circle-arrow-right"></i></a>
+							  	<span class="pe-3" th:text="${task.name}"></span><br>
+							  	<a th:href="@{/tasks/{taskId}(taskId = ${task.id})}"><i class="fa-solid fa-eye px-1"></i></a>
+							 	<a th:href="@{/tasks/{taskId}/delete(taskId = ${task.id})}"><i class="fa-solid fa-trash px-1"></i></a>
+							 	<a th:href="@{/tasks/move/doing/{taskId}(taskId = ${task.id})}"><i class="fa-solid fa-circle-arrow-right px-1"></i></a>
 							  </li>
 							</ul>
 						</td></tr>
@@ -44,11 +44,11 @@
 					<tr><td scope="row">
 							<ul class="list-group"  th:each="task : ${doingTasks}">						 
 							  <li class="list-group-item item">
-							  	<span class="pe-3" th:text="${task.name}"></span>
+							  	<span class="pe-3" th:text="${task.name}"></span><br>
 							  	<a th:href="@{/tasks/{taskId}(taskId = ${task.id})}"><i class="fa-solid fa-eye"></i></a>
-							 	<a th:href="@{/tasks/{taskId}/delete(taskId = ${task.id})}"><i class="fa-solid fa-trash"></i></a>
-							 	<a th:href="@{/tasks/move/toDo/{taskId}(taskId = ${task.id})}"><i class="fa-solid fa-circle-arrow-left"></i></a>							 	
-							 	<a th:href="@{/tasks/move/done/{taskId}(taskId = ${task.id})}"><i class="fa-solid fa-circle-arrow-right"></i></a>
+							 	<a th:href="@{/tasks/{taskId}/delete(taskId = ${task.id})}"><i class="fa-solid fa-trash px-1"></i></a>
+							 	<a th:href="@{/tasks/move/toDo/{taskId}(taskId = ${task.id})}"><i class="fa-solid fa-circle-arrow-left px-1"></i></a>							 	
+							 	<a th:href="@{/tasks/move/done/{taskId}(taskId = ${task.id})}"><i class="fa-solid fa-circle-arrow-right px-1"></i></a>
 							  </li>
 							</ul>
 						</td></tr>
@@ -64,10 +64,10 @@
 					<tr><td scope="row">
 							<ul class="list-group"  th:each="task : ${doneTasks}">						 
 							  <li class="list-group-item item">
-							  	<span class="pe-3" th:text="${task.name}"></span>
-							  	<a th:href="@{/tasks/{taskId}(taskId = ${task.id})}"><i class="fa-solid fa-eye"></i></a>
-							 	<a th:href="@{/tasks/{taskId}/delete(taskId = ${task.id})}"><i class="fa-solid fa-trash"></i></a>
-							 	<a th:href="@{/tasks/move/doing/{taskId}(taskId = ${task.id})}"><i class="fa-solid fa-circle-arrow-left"></i></a>							  	
+							  	<span class="pe-3" th:text="${task.name}"></span><br>
+							  	<a th:href="@{/tasks/{taskId}(taskId = ${task.id})}"><i class="fa-solid fa-eye px-1"></i></a>
+							 	<a th:href="@{/tasks/{taskId}/delete(taskId = ${task.id})}"><i class="fa-solid fa-trash px-1"></i></a>
+							 	<a th:href="@{/tasks/move/doing/{taskId}(taskId = ${task.id})}"><i class="fa-solid fa-circle-arrow-left px-1"></i></a>							  	
 							  </li>
 							</ul>
 						</td></tr>
