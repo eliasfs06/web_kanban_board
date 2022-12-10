@@ -28,7 +28,8 @@
 			<ul class="list-group">
 				 <span th:text="${c.owner == null ? '' : c.owner.person.name}"></span>
 				<li class="list-group-item item">
-				 	<span  th:text="${c.description == null ? '' : c.description}"></span>
+				 	<span  th:text="${c.description == null ? '' : c.description}"></span><br>
+				 	<img th:if="${c.imageName} != null" th:src="@{/comments/findImage/{id}(id = ${c.id})}" width="200">
 		 		</li>
 		 		<a th:href="@{/comments/{commentId}/delete(commentId = ${c.id})}"><i class="fa-solid fa-trash"></i></a><br>
 		 	</ul>

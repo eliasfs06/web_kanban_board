@@ -1,9 +1,15 @@
 package br.com.springproject.kanbanBoard.controllers;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -11,6 +17,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -39,6 +48,9 @@ public class CommentController {
 	@Autowired
 	TaskRepository taskRepository;
 	
+	@Value("${file.path}")
+	private String filePath;
+	
 	@GetMapping("/new/{taskId}")
 	public ModelAndView newTask(Comment comment, @PathVariable Long taskId) {
 	
@@ -51,7 +63,7 @@ public class CommentController {
 	}
 	
 	@PostMapping
-	public ModelAndView create(Comment comment, BindingResult br, RedirectAttributes ra) {	
+	public ModelAndView create(Comment comment, BindingResult br, RedirectAttributes ra, @RequestParam("file") MultipartFile file) {	
 		
 		try {
 			commentValidator.isDescriptionValid(comment);
@@ -65,6 +77,17 @@ public class CommentController {
 			br.rejectValue("owner", "error.user", e.getMessage());	
 		}
 		
+		try {
+			if(!file.isEmpty()) {
+				byte[] bytes = file.getBytes();
+				Path path = Paths.get(filePath + file.getOriginalFilename());
+				Files.write(path, bytes);
+				
+				comment.setImageName(filePath + file.getOriginalFilename());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		if(br.hasErrors()) {
 			ModelAndView mv = new ModelAndView("comments/new");
@@ -107,6 +130,18 @@ public class CommentController {
 		}
 		
 		return mv;
+	}
+	
+	@GetMapping("/findImage/{id}")
+	@ResponseBody
+	public byte[] findImage(@PathVariable Long id) throws IOException {
+		
+		Optional<Comment> comment = commentRepository.findById(id);
+		File fileImage = new File(comment.get().getImageName());
+		if(comment.get().getImageName() != null) {
+			return Files.readAllBytes(fileImage.toPath());
+		}
+		return null;
 	}
 	
 }

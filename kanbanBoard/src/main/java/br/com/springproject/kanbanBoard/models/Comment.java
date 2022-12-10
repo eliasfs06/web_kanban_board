@@ -9,6 +9,8 @@ public class Comment extends AbstractBoardObject {
 
 	@NonNull
 	private Long taskId;
+	
+	private String imageName;
 
 	public Comment() {
 		super();
@@ -26,6 +28,15 @@ public class Comment extends AbstractBoardObject {
 	public void setTaskId(Long taskId) {
 		this.taskId = taskId;
 	}
+
+	public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+	
 	
 
 }

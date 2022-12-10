@@ -6,11 +6,16 @@
 	<div th:replace="~{fragments :: navbar}"></div>
 	<div class="container mt-3">
 		<h1  class="mb-3">New Comment</h1>
-		<form th:object="${comment}" action="/comments" method="POST">
+		<form th:object="${comment}" action="/comments" method="POST" enctype="multipart/form-data">
 			<div class="mb-3">
 				<label for="description" class="form-label">Description: </label> 
 				<input type="text" th:class="${#fields.hasErrors('description')}? 'form-control is-invalid' : 'form-control'" id="description" th:field="*{description}">
-				<div th:errors="*{description}" class="invalid-feedback"></div>			</div>
+				<div th:errors="*{description}" class="invalid-feedback"></div>			
+			</div>
+			<div class="mb-3">
+				<label for="description" class="form-label"> Image: </label> 
+				<input type="file" name="file">
+			</div>
 			<div class="mb-3">
 				<label class="form-label" for="owner"> Owner </label> 
 				<select th:class="${#fields.hasErrors('owner')}? 'form-select is-invalid' : 'form-select'" th:field="*{owner}">
