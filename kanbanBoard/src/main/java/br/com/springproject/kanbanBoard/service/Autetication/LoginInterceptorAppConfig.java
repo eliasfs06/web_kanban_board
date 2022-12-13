@@ -15,7 +15,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
                 "/error",
                 "/logar",
                 "/",
-                "/users/new"
+                "/users/new",
+                "/users"
         );
     }
 }

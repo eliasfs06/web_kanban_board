@@ -91,7 +91,7 @@ public class UserController {
 			return mv;
 		}
 		
-		ModelAndView mv = new ModelAndView("redirect:/users");
+		ModelAndView mv = new ModelAndView("redirect:/users/new");
 		try {
 			user.getName().toUpperCase();
 			userRepository.save(user);
