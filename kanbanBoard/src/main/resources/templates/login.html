@@ -6,6 +6,8 @@
 	<div class="container mt-3">
 		<h1  class="mb-3">Login</h1>
 		<form th:object="${user}" action="/logar" method="POST">
+			<div th:if="${logout != null}" th:text="${logout}" class="alert alert-success" role="alert"></div>
+			<div th:if="${erro != null}" th:text="${erro}" class="alert alert-danger" role="alert"></div>
 			<div class="mb-3">
 				<label for="login" class="form-"> Login: </label>
 				<input type="login" class="form-control form-control-user"
@@ -16,8 +18,9 @@
 				<input type="password" name="password" class="form-control form-control-user"
 				id="password" placeholder="Enter your password">
 			</div>
-			<div th:if="${erro != null}" th:text="${erro}" class="alert alert-danger" role="alert"></div>
 			<button  class="btn btn-primary btn-user btn-block">Login
+			</button>
+			<button  class="btn btn-primary btn-user btn-block">New User
 			</button>
 		</form>
 		

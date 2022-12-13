@@ -1,25 +1,17 @@
 package br.com.springproject.kanbanBoard.controllers;
 
-import br.com.springproject.kanbanBoard.models.Role;
 import br.com.springproject.kanbanBoard.models.User;
-import br.com.springproject.kanbanBoard.repositories.BoardRepository;
 import br.com.springproject.kanbanBoard.repositories.UserRepository;
-import br.com.springproject.kanbanBoard.service.UserService;
-import br.com.springproject.kanbanBoard.utils.Messages;
-import br.com.springproject.kanbanBoard.validator.UserValidator;
+import br.com.springproject.kanbanBoard.service.CookieService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-import java.util.Optional;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 
@@ -35,13 +27,21 @@ public class LoginController {
 	}
 
 	@PostMapping("/logar")
-	public ModelAndView logar(Model model, String login, String password) {
+	public ModelAndView logar(Model model, String login, String password, HttpServletResponse response) {
 		User log = this.userRepository.Login(login, password);
-		if (log != null) {
+		if (log != null){
+			CookieService.setCookie(response, "userID", String.valueOf(log.getId()) ,120);
 			ModelAndView mv = new ModelAndView("home");
 			return mv;
 		}
-		model.addAttribute("erro", "Inválid User or Password");
+		model.addAttribute("erro", "Invalid User or Password");
+		return login();
+	}
+
+	@GetMapping("/logout")
+	public ModelAndView logar(Model model, HttpServletResponse response){
+		CookieService.setCookie(response, "userID","" ,0);
+		model.addAttribute("logout", "You are now logged out!");
 		return login();
 	}
 }
