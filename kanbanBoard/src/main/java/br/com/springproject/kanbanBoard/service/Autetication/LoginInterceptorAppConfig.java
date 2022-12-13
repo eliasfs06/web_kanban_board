@@ -13,7 +13,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
             .excludePathPatterns(
                 "/login",
                 "/error",
-                "/logar"
+                "/logar",
+                "/",
+                "/users/new"
         );
     }
 }

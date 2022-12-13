@@ -8,5 +8,7 @@ public interface AbstractController {
 	
 	public ModelAndView index();
 	public ModelAndView create();
+	public ModelAndView delete();
+	public ModelAndView update();
 
 }
