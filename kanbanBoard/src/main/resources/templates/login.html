@@ -1,0 +1,35 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments :: head('Login')}"></head>
+<body>
+	<div th:replace="~{fragments :: navbar}"></div>
+	<div class="container mt-3">
+		<h1  class="mb-3">Login</h1>
+		<form th:object="${user}" action="/logar" method="POST">
+			<div th:if="${logout != null}" th:text="${logout}" class="alert alert-success" role="alert"></div>
+			<div th:if="${erro != null}" th:text="${erro}" class="alert alert-danger" role="alert"></div>
+			<div class="mb-3">
+				<label for="login" class="form-"> Login: </label>
+				<input type="login" class="form-control form-control-user"
+				id="login" name="login" placeholder="Enter your login">
+			</div>
+			<div class="mb-3">
+				<label for="password" class="form-label"> Password: </label> 
+				<input type="password" name="password" class="form-control form-control-user"
+				id="password" placeholder="Enter your password">
+			</div>
+			<button  class="btn btn-primary btn-user btn-block">Login
+			</button>
+			<button  class="btn btn-primary btn-user btn-block">New User
+			</button>
+		</form>
+		
+	</div>
+</body>
+</html>
+
+
+
+
+
+
